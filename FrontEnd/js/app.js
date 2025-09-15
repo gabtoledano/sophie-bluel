@@ -7,7 +7,6 @@ async function getWorks() {
     }
 
     const json = await reponse.json();
-    console.log(json);
     for (let i = 0; i < json.length; i++) {
       setFigure(json[i]);
     }
@@ -23,4 +22,29 @@ function setFigure(data) {
 							<figcaption>${data.title}</figcaption>`;
 
   document.querySelector(".gallery").append(figure);
+}
+
+async function getCategories() {
+  const url = "http://localhost:5678/api/categories";
+  try {
+    const reponse = await fetch(url);
+    if (!reponse.ok) {
+      throw new Error("Erreur lors de la récupération des works");
+    }
+
+    const json = await reponse.json();
+    console.log(json);
+    for (let i = 0; i < json.length; i++) {
+      setFilter(json[i]);
+    }
+  } catch (error) {
+    console.error(error.message);
+  }
+}
+getCategories();
+
+function setFilter(data) {
+  const div = document.createElement("div");
+  div.innerHTML = `${data.name}`;
+  document.querySelector(".div-container").append(div);
 }
