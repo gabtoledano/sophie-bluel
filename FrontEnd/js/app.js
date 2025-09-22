@@ -1,14 +1,21 @@
-async function getWorks() {
+async function getWorks(filter) {
+  document.querySelector(".gallery").innerHTML = "";
   const url = "http://localhost:5678/api/works";
   try {
     const reponse = await fetch(url);
     if (!reponse.ok) {
       throw new Error("Erreur lors de la récupération des works");
     }
-
     const json = await reponse.json();
-    for (let i = 0; i < json.length; i++) {
-      setFigure(json[i]);
+    if (filter) {
+      const filtered = json.filter((data) => data.categoryId === filter);
+      for (let i = 0; i < filtered.length; i++) {
+        setFigure(filtered[i]);
+      }
+    } else {
+      for (let i = 0; i < json.length; i++) {
+        setFigure(json[i]);
+      }
     }
   } catch (error) {
     console.error(error.message);
@@ -20,7 +27,6 @@ function setFigure(data) {
   const figure = document.createElement("figure");
   figure.innerHTML = `<img src=${data.imageUrl} alt=${data.title}>
 							<figcaption>${data.title}</figcaption>`;
-
   document.querySelector(".gallery").append(figure);
 }
 
@@ -29,11 +35,10 @@ async function getCategories() {
   try {
     const reponse = await fetch(url);
     if (!reponse.ok) {
-      throw new Error("Erreur lors de la récupération des works");
+      throw new Error("Erreur lors de la récupération des catégories");
     }
 
     const json = await reponse.json();
-    console.log(json);
     for (let i = 0; i < json.length; i++) {
       setFilter(json[i]);
     }
@@ -45,6 +50,10 @@ getCategories();
 
 function setFilter(data) {
   const div = document.createElement("div");
+  div.className = data.id;
+  div.addEventListener("click", () => getWorks(data.id));
   div.innerHTML = `${data.name}`;
   document.querySelector(".div-container").append(div);
 }
+
+document.querySelector(".tous").addEventListener("click", () => getWorks());
