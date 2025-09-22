@@ -23,6 +23,14 @@ time, mark, audio, video {
 	font: inherit;
 	vertical-align: baseline;
 }
+
+a {
+	color : black;
+}
+
+a:visited {
+	color : black;
+}
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
@@ -30,6 +38,7 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
 	line-height: 1;
+	background-color: #FFFEF8;
 }
 ol, ul {
 	list-style: none;
@@ -121,7 +130,8 @@ li:hover {
 #introduction p {
 	margin-bottom: 0.5em;
 }
-#portfolio h2 {
+#portfolio h2,
+#login h2 {
 	text-align: center;
 	margin-bottom: 1em;
 }
@@ -160,31 +170,43 @@ li:hover {
 	width: 100%;
 
 }
-#contact {
+#contact,
+#login {
 	width: 50%;
-margin: auto;
+	margin: auto;
 }
-#contact > * {
+#contact > *,
+#login > * {
 	text-align: center;
 
 }
 #contact h2{
 	margin-bottom: 20px;
 }
-#contact form {
+#contact form,
+#login form {
 	text-align: left;
 	margin-top:30px;
 	display: flex;
 	flex-direction: column;
 }
 
-#contact input {
+#contact input,
+#login input {
 	height: 50px;
 	font-size: 1.2em;
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
-#contact label {
+
+#login input[type="email"],
+#login input[type="password"]
+ {
+	padding: 1px 20px;
+}
+
+#contact label,
+#login label {
 	margin: 2em 0 1em 0;
 }
 #contact textarea {
@@ -208,4 +230,3 @@ footer nav ul {
 	justify-content: flex-end;
 	margin: 2em
 }
-
