@@ -59,7 +59,7 @@ table {
 body {
 	max-width: 1140px;
 	margin:auto;
-	font-family: 'Work Sans' ;
+	font-family: 'Work Sans';
 	font-size: 14px;
 }
 header {
@@ -238,4 +238,19 @@ footer nav ul {
 	display: flex;
 	justify-content: center;
 	padding: 10px;
+}
+
+.edit {
+	background-color: black;
+	color: white;
+	height: 50px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+	left: 50%;
+	right: 50%;
+	margin-left: -50vw;
+	margin-right: -50vw;
+	width: 100vw;
 }
