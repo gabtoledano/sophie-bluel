@@ -17,7 +17,15 @@ async function handleSubmit(event) {
     },
     body: JSON.stringify(user),
   });
+  if (response.status != 200) {
+    const errorBox = document.createElement("div");
+    errorBox.className = "error-login";
+    errorBox.innerHTML = "Erreur dans l’identifiant ou le mot de passe";
+    document.querySelector("form").prepend(errorBox);
+  }
 
   let result = await response.json();
-  console.log(result);
+  const token = result.token;
+  sessionStorage.setItem("authToken", token);
+  window.location.href = "index.html";
 }

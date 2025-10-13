@@ -230,3 +230,12 @@ footer nav ul {
 	justify-content: flex-end;
 	margin: 2em
 }
+
+.error-login {
+	border: 1px solid red;
+	background-color: #b84947;
+	color: white;
+	display: flex;
+	justify-content: center;
+	padding: 10px;
+}
