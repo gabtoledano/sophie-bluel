@@ -60,13 +60,37 @@ document.querySelector(".tous").addEventListener("click", () => getWorks());
 
 function displayAdminMode() {
   if (sessionStorage.authToken) {
-    console.log("ok");
     const editBanner = document.createElement("div");
     editBanner.className = "edit";
     editBanner.innerHTML =
-      '<p><i class="fa-regular fa-pen-to-square"></i>Mode édition</p>';
+      '<p><a href="#modal1" class="js-modal"><i class="fa-regular fa-pen-to-square"></i>Mode édition</a></p>';
     document.body.prepend(editBanner);
+
+    const loginLink = document.querySelector('a[href="login.html"]');
+    if (loginLink) {
+      loginLink.textContent = "logout";
+      loginLink.href = "#";
+      loginLink.addEventListener("click", handleLogout);
+    }
   }
 }
 
+function handleLogout(event) {
+  event.preventDefault();
+  sessionStorage.removeItem("authToken");
+  window.location.href = "index.html";
+}
+
 displayAdminMode();
+
+const openModal = function (e) {
+  e.preventDefault();
+  const target = document.querySelector(e.target.getAttribute("href"));
+  target.style.display = null;
+  target.removeAttribute("aria-hidden");
+  target.setAttribute("aria-modal", "true");
+};
+
+document.querySelectorAll(".js-modal").forEach((a) => {
+  a.addEventListener("click", openModal);
+});
