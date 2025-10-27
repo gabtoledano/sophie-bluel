@@ -19,6 +19,10 @@ async function getWorks(filter) {
         setModalFigure(json[i]);
       }
     }
+    const trashCans = document.querySelectorAll(".fa-trash-can");
+    trashCans.forEach((e) =>
+      e.addEventListener("click", (event) => deleteWork(event))
+    );
   } catch (error) {
     console.error(error.message);
   }
@@ -37,7 +41,7 @@ function setModalFigure(data) {
   figure.innerHTML = `<div class="image-container">
               <img src=${data.imageUrl} alt=${data.title}>
 							<figcaption>${data.title}</figcaption>
-              <i class="fa-solid fa-trash-can overlay-icon"></i></div>`;
+              <i id=${data.id} class="fa-solid fa-trash-can overlay-icon"></i></div>`;
   document.querySelector(".gallery-modal").append(figure);
 }
 
@@ -162,3 +166,25 @@ window.addEventListener("keydown", function (e) {
     focusInModal(e);
   }
 });
+
+async function deleteWork(event) {
+  const id = event.srcElement.id;
+  const deleteApi = "http://localhost:5678/api/works/";
+  const token = sessionStorage.authToken;
+
+  let response = await fetch(deleteApi + id, {
+    method: "DELETE",
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  });
+  if (response.status == 401 || response.status == 500 ) {
+    const errorBox = document.createElement("div");
+    errorBox.className = "error-login";
+    errorBox.innerHTML = "Erreur lors de la suppression de l'élément";
+    document.querySelector(".modal-button-container").prepend(errorBox);
+  } else {
+    let result = await response.json();
+    console.log(result);
+  }
+}
