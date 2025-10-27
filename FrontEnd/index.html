@@ -25,12 +25,20 @@
       aria-hidden="true"
       role="dialog"
       aria-labelledby="titlemodel"
-      style="display:none;"
+      style="display: none"
     >
       <div class="modal-wrapper js-modal-stop">
-        <button class="js-modal-close">Fermer la boite modale</button>
-        <h1 id="titlemodal">Ceci est ma modal</h1>
-        <p>On est ici pour un test</p>
+        <div class="close-button-container">
+          <button class="js-modal-close">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+        <h3>Galerie photo</h3>
+        <div class="gallery-modal"></div>
+        <hr />
+        <div class="modal-button-container">
+          <button class="add-photo">Ajouter une photo</button>
+        </div>
       </div>
     </aside>
     <header>
@@ -69,7 +77,10 @@
         </article>
       </section>
       <section id="portfolio">
-        <h2>Mes Projets</h2>
+        <div class="project-container">
+          <h2>Mes Projets</h2>
+          <p><i class="fa-regular fa-pen-to-square"></i>modifier</p>
+        </div>
         <div class="div-container">
           <div class="tous">Tous</div>
         </div>
