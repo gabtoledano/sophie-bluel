@@ -2,23 +2,24 @@ async function getWorks(filter) {
   document.querySelector(".gallery").innerHTML = "";
   const url = "http://localhost:5678/api/works";
   try {
-    const reponse = await fetch(url);
-    if (!reponse.ok) {
-      throw new Error("Erreur lors de la récupération des works");
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`Response status: ${response.status}`);
     }
-    const json = await reponse.json();
+    const json = await response.json();
     if (filter) {
       const filtered = json.filter((data) => data.categoryId === filter);
       for (let i = 0; i < filtered.length; i++) {
         setFigure(filtered[i]);
-        setModalFigure(filtered[i]);
+        setFigureModal(filtered[i]);
       }
     } else {
       for (let i = 0; i < json.length; i++) {
         setFigure(json[i]);
-        setModalFigure(json[i]);
+        setFigureModal(json[i]);
       }
     }
+    //Delete
     const trashCans = document.querySelectorAll(".fa-trash-can");
     trashCans.forEach((e) =>
       e.addEventListener("click", (event) => deleteWork(event))
@@ -32,28 +33,32 @@ getWorks();
 function setFigure(data) {
   const figure = document.createElement("figure");
   figure.innerHTML = `<img src=${data.imageUrl} alt=${data.title}>
-							<figcaption>${data.title}</figcaption>`;
+                    <figcaption>${data.title}</figcaption>`;
+
   document.querySelector(".gallery").append(figure);
 }
 
-function setModalFigure(data) {
+function setFigureModal(data) {
   const figure = document.createElement("figure");
   figure.innerHTML = `<div class="image-container">
-              <img src=${data.imageUrl} alt=${data.title}>
-							<figcaption>${data.title}</figcaption>
-              <i id=${data.id} class="fa-solid fa-trash-can overlay-icon"></i></div>`;
-  document.querySelector(".gallery-modal").append(figure);
+        <img src="${data.imageUrl}" alt="${data.title}">
+        <figcaption>${data.title}</figcaption>
+        <i id=${data.id} class="fa-solid fa-trash-can overlay-icon"></i>
+    </div>
+`;
+
+  document.querySelector(".modal-gallery").append(figure);
 }
 
 async function getCategories() {
   const url = "http://localhost:5678/api/categories";
   try {
-    const reponse = await fetch(url);
-    if (!reponse.ok) {
-      throw new Error("Erreur lors de la récupération des catégories");
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`Response status: ${response.status}`);
     }
 
-    const json = await reponse.json();
+    const json = await response.json();
     for (let i = 0; i < json.length; i++) {
       setFilter(json[i]);
     }
@@ -80,20 +85,7 @@ function displayAdminMode() {
     editBanner.innerHTML =
       '<p><a href="#modal1" class="js-modal"><i class="fa-regular fa-pen-to-square"></i>Mode édition</a></p>';
     document.body.prepend(editBanner);
-
-    const loginLink = document.querySelector('a[href="login.html"]');
-    if (loginLink) {
-      loginLink.textContent = "logout";
-      loginLink.href = "#";
-      loginLink.addEventListener("click", handleLogout);
-    }
   }
-}
-
-function handleLogout(event) {
-  event.preventDefault();
-  sessionStorage.removeItem("authToken");
-  window.location.href = "index.html";
 }
 
 displayAdminMode();
@@ -154,10 +146,6 @@ const focusInModal = function (e) {
   focusables[index].focus();
 };
 
-document.querySelectorAll(".js-modal").forEach((a) => {
-  a.addEventListener("click", openModal);
-});
-
 window.addEventListener("keydown", function (e) {
   if (e.key === "Escape" || e.key === "Esc") {
     closeModal(e);
@@ -167,21 +155,27 @@ window.addEventListener("keydown", function (e) {
   }
 });
 
+document.querySelectorAll(".js-modal").forEach((a) => {
+  a.addEventListener("click", openModal);
+});
+
+// Delete Function
+
 async function deleteWork(event) {
+  event.stopPropagation();
   const id = event.srcElement.id;
   const deleteApi = "http://localhost:5678/api/works/";
   const token = sessionStorage.authToken;
-
   let response = await fetch(deleteApi + id, {
     method: "DELETE",
     headers: {
       Authorization: "Bearer " + token,
     },
   });
-  if (response.status == 401 || response.status == 500 ) {
+  if (response.status == 401 || response.status == 500) {
     const errorBox = document.createElement("div");
     errorBox.className = "error-login";
-    errorBox.innerHTML = "Erreur lors de la suppression de l'élément";
+    errorBox.innerHTML = "Il y a eu une erreur";
     document.querySelector(".modal-button-container").prepend(errorBox);
   } else {
     let result = await response.json();

@@ -13,7 +13,7 @@
     <meta name="description" content="" />
     <link rel="stylesheet" href="./assets/style.css" />
     <script
-      src="https://kit.fontawesome.com/f62ad74d40.js"
+      src="https://kit.fontawesome.com/2df4fe767c.js"
       crossorigin="anonymous"
     ></script>
     <script src="js/app.js" defer></script>
@@ -24,20 +24,45 @@
       class="modal"
       aria-hidden="true"
       role="dialog"
-      aria-labelledby="titlemodel"
+      aria-labelledby="titlemodal"
       style="display: none"
     >
       <div class="modal-wrapper js-modal-stop">
-        <div class="close-button-container">
-          <button class="js-modal-close">
-            <i class="fa-solid fa-xmark"></i>
-          </button>
+        <div class="gallery-modal">
+          <div class="close-button-container">
+            <button class="js-modal-close">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </div>
+          <h3>Galerie Photo</h3>
+          <div class="modal-gallery"></div>
+          <hr />
+          <div class="modal-button-container">
+            <button class="add-photo-button">Ajouter une photo</button>
+          </div>
         </div>
-        <h3>Galerie photo</h3>
-        <div class="gallery-modal"></div>
-        <hr />
-        <div class="modal-button-container">
-          <button class="add-photo">Ajouter une photo</button>
+        <!--  -->
+        <div class="add-modal">
+          <div class="modal-buttons-container">
+            <button class="js-modal-back">
+              <i class="fa-solid fa-arrow-left"></i>
+            </button>
+            <button class="js-modal-close">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </div>
+
+          <h3>Ajout photo</h3>
+          <div class="form add-photo-form">
+            <form action="#" method="post">
+              <label for="title">Titre</label>
+              <input type="text" name="title" id="title" />
+              <label for="category">Catégorie</label>
+              <input type="category" name="category" id="category" />
+              <hr />
+              <input type="submit" value="Valider" />
+            </form>
+          </div>
         </div>
       </div>
     </aside>
@@ -77,17 +102,14 @@
         </article>
       </section>
       <section id="portfolio">
-        <div class="project-container">
-          <h2>Mes Projets</h2>
-          <p><i class="fa-regular fa-pen-to-square"></i>modifier</p>
-        </div>
+        <h2>Mes Projets</h2>
         <div class="div-container">
           <div class="tous">Tous</div>
         </div>
         <div class="gallery"></div>
       </section>
-      <section id="contact">
-        <h2>Contact</h2>
+      <div class="form">
+        <h2 id="contact">Contact</h2>
         <p>Vous avez un projet ? Discutons-en !</p>
         <form action="#" method="post">
           <label for="name">Nom</label>
@@ -98,7 +120,7 @@
           <textarea name="message" id="message" cols="30" rows="10"></textarea>
           <input type="submit" value="Envoyer" />
         </form>
-      </section>
+      </div>
     </main>
 
     <footer>
