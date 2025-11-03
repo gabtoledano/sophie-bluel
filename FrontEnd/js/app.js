@@ -198,3 +198,24 @@ async function deleteWork(event) {
   }
 }
 
+const addPhotoButton = document.querySelector(".add-photo-button");
+const backButton = document.querySelector(".js-modal-back");
+
+addPhotoButton.addEventListener("click", toggleModal);
+backButton.addEventListener("click", toggleModal);
+
+function toggleModal() {
+  const galleryModal = document.querySelector(".gallery-modal");
+  const addModal = document.querySelector(".add-modal");
+
+  if (
+    galleryModal.style.display === "block" ||
+    galleryModal.style.display === ""
+  ) {
+    galleryModal.style.display = "none";
+    addModal.style.display = "block";
+  } else {
+    galleryModal.style.display = "block";
+    addModal.style.display = "none";
+  }
+}
