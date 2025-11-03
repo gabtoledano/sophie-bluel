@@ -85,7 +85,20 @@ function displayAdminMode() {
     editBanner.innerHTML =
       '<p><a href="#modal1" class="js-modal"><i class="fa-regular fa-pen-to-square"></i>Mode édition</a></p>';
     document.body.prepend(editBanner);
+
+    const loginLink = document.querySelector('a[href="login.html"]');
+    if (loginLink) {
+      loginLink.textContent = "logout";
+      loginLink.href = "#";
+      loginLink.addEventListener("click", handleLogout);
+    }
   }
+}
+
+function handleLogout(event) {
+  event.preventDefault();
+  sessionStorage.removeItem("authToken");
+  window.location.href = "index.html";
 }
 
 displayAdminMode();
@@ -103,7 +116,9 @@ const openModal = function (e) {
   modal.removeAttribute("aria-hidden");
   modal.setAttribute("aria-modal", "true");
   modal.addEventListener("click", closeModal);
-  modal.querySelector(".js-modal-close").addEventListener("click", closeModal);
+  modal
+    .querySelectorAll(".js-modal-close")
+    .forEach((e) => e.addEventListener("click", closeModal));
   modal
     .querySelector(".js-modal-stop")
     .addEventListener("click", stopPropagation);
@@ -182,3 +197,4 @@ async function deleteWork(event) {
     console.log(result);
   }
 }
+
