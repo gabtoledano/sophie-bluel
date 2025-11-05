@@ -271,7 +271,7 @@ li:hover {
 	flex-direction: column;
 }
 
-.form input {
+.form input, select {
 	height: 50px;
 	font-size: 1.2em;
 	border: none;
@@ -334,8 +334,6 @@ footer nav ul {
 	color: white;
 }
 
-/* modal */
-
 .modal {
 	position: fixed;
 	display: flex;
@@ -357,3 +355,36 @@ footer nav ul {
 	background-color: white;
 }
 
+.file-section {
+	background-color: #E8F1F6;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 20px;
+}
+
+.file-section label {
+	background-color: #CBD6DC;
+	padding: 10px 20px;
+	margin-top: 10px;
+	border-radius: 50px;
+	color: #306685;
+	cursor: pointer;
+	width: 180px;
+	text-align: center;
+	font-weight: 600;
+}
+
+.file-section p {
+	font-size: 10px;
+	color: #444444;
+}
+
+.fa-image {
+	color: #CBD6DC;
+	font-size: 75px;
+}
+
+#file {
+	display: none;
+}
