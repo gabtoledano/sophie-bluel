@@ -56,15 +56,16 @@
           <div class="form add-photo-form">
             <form action="#" method="post">
               <div class="file-section">
-                <div><i class="fa-regular fa-image"></i></div>
-                <label for="file">+ Ajouter photo</label>
+                <div id="photo-container"></div>
+                <div><i class="fa-regular fa-image picture-loaded"></i></div>
+                <label class="picture-loaded" for="file">+ Ajouter photo</label>
                 <input
                   type="file"
                   name="file"
                   id="file"
                   accept="image/jpeg, image/png"
                 />
-                <p>jpg, png : 4mo max</p>
+                <p class="picture-loaded">jpg, png : 4mo max</p>
               </div>
               <label for="title">Titre</label>
               <input type="text" name="title" id="title" />

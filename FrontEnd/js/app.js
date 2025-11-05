@@ -219,3 +219,22 @@ function toggleModal() {
     addModal.style.display = "none";
   }
 }
+
+document.getElementById("file").addEventListener("change", function (event) {
+  const file = event.target.files[0];
+  if (file && (file.type === "image/jpeg" || file.type === "image/png")) {
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      const img = document.createElement("img");
+      img.src = e.target.result;
+      img.alt = "Uploaded Photo";
+      document.getElementById("photo-container").appendChild(img);
+    };
+    reader.readAsDataURL(file);
+    document
+      .querySelectorAll(".picture-loaded")
+      .forEach((e) => (e.style.display = "none"));
+  } else {
+    alert("Veuillez sélectionner un fichier image au format JPEG ou PNG.");
+  }
+});

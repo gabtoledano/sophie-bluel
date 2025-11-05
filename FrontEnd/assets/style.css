@@ -1,15 +1,15 @@
 .container {
     display: flex;
-    align-items: center; /* Centre verticalement les éléments */
+    align-items: center;
 	justify-content: center;
 }
 
 .container h2 {
-    text-align: center; /* Centre le texte à l'intérieur de h2 */
+    text-align: center;
 }
 
 .container p {
-    margin-left: 10px; /* Ajuste l'espace entre h2 et p selon vos besoins */
+    margin-left: 10px;
 }
 /* http://meyerweb.com/eric/tools/css/reset/
    v2.0 | 20110126
@@ -244,9 +244,9 @@ li:hover {
 
 .image-container .overlay-icon {
     position: absolute;
-    top: 6px; /* Ajustez cette valeur pour placer l'icône en fonction de vos besoins */
-    right: 6px; /* Ajustez cette valeur pour placer l'icône en fonction de vos besoins */
-    font-size: 16px; /* Ajustez cette valeur pour la taille de l'icône */
+    top: 6px;
+    right: 6px;
+    font-size: 16px;
     cursor: pointer;
     background-color: black;
     color: white;
@@ -388,3 +388,12 @@ footer nav ul {
 #file {
 	display: none;
 }
+
+#photo-container {
+	width: 70%;
+}
+
+#photo-container img {
+	width: 100%;
+}
+
