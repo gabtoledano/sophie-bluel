@@ -174,8 +174,6 @@ document.querySelectorAll(".js-modal").forEach((a) => {
   a.addEventListener("click", openModal);
 });
 
-// Delete Function
-
 async function deleteWork(event) {
   event.stopPropagation();
   const id = event.srcElement.id;
@@ -220,12 +218,15 @@ function toggleModal() {
   }
 }
 
+let img = document.createElement("img");
+let file;
+
+document.querySelector("#file").style.display = "none";
 document.getElementById("file").addEventListener("change", function (event) {
-  const file = event.target.files[0];
+  file = event.target.files[0]; // Assignez le fichier à une variable globale
   if (file && (file.type === "image/jpeg" || file.type === "image/png")) {
     const reader = new FileReader();
     reader.onload = function (e) {
-      const img = document.createElement("img");
       img.src = e.target.result;
       img.alt = "Uploaded Photo";
       document.getElementById("photo-container").appendChild(img);
@@ -235,6 +236,63 @@ document.getElementById("file").addEventListener("change", function (event) {
       .querySelectorAll(".picture-loaded")
       .forEach((e) => (e.style.display = "none"));
   } else {
-    alert("Veuillez sélectionner un fichier image au format JPEG ou PNG.");
+    alert("Veuillez sélectionner une image au format JPG ou PNG.");
+  }
+});
+
+const titleInput = document.getElementById("title");
+let titleValue = "";
+
+let selectedValue = "1";
+
+document.getElementById("category").addEventListener("change", function () {
+  selectedValue = this.value;
+});
+
+titleInput.addEventListener("input", function () {
+  titleValue = titleInput.value;
+  console.log("Titre actuel :", titleValue);
+});
+
+const addPictureForm = document.getElementById("picture-form");
+
+addPictureForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const hasImage = document.querySelector("#photo-container").firstChild;
+  if (hasImage && titleValue) {
+    const formData = new FormData();
+
+    formData.append("image", file);
+    formData.append("title", titleValue);
+    formData.append("category", selectedValue);
+
+    const token = sessionStorage.authToken;
+
+    if (!token) {
+      console.error("Token d'authentification manquant.");
+      return;
+    }
+
+    let response = await fetch("http://localhost:5678/api/works", {
+      method: "POST",
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+      body: formData,
+    });
+    if (response.status !== 200) {
+      const errorText = await response.text();
+      console.error("Erreur : ", errorText);
+      const errorBox = document.createElement("div");
+      errorBox.className = "error-login";
+      errorBox.innerHTML = `Il y a eu une erreur : ${errorText}`;
+      document.querySelector("form").prepend(errorBox);
+    } else {
+      let result = await response.json();
+      console.log(result);
+    }
+    console.log("hasImage and titleValue is true");
+  } else {
+    alert("Veuillez remplir tous les champs");
   }
 });
