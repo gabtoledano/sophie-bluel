@@ -41,7 +41,6 @@
             <button class="add-photo-button">Ajouter une photo</button>
           </div>
         </div>
-        <!--  -->
         <div class="add-modal" style="display: none">
           <div class="modal-buttons-container">
             <button class="js-modal-back">
@@ -51,7 +50,6 @@
               <i class="fa-solid fa-xmark"></i>
             </button>
           </div>
-
           <h3>Ajout photo</h3>
           <div class="form add-photo-form">
             <form id="picture-form" action="#" method="post">
@@ -118,9 +116,15 @@
         </article>
       </section>
       <section id="portfolio">
-        <h2>Mes Projets</h2>
+        <div class="projets-container">
+          <h2 class="projets-title">Mes Projets</h2>
+          <a href="#modal1" style="display:none" class="js-modal js-modal-2"
+            ><i class="fa-regular fa-pen-to-square"></i>Mode édition</a
+          >
+        </div>
+
         <div class="div-container">
-          <div class="tous">Tous</div>
+          <div class="tous active-filter">Tous</div>
         </div>
         <div class="gallery"></div>
       </section>

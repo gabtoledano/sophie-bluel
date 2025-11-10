@@ -20,7 +20,7 @@ async function handleSubmit(event) {
   if (response.status != 200) {
     const errorBox = document.createElement("div");
     errorBox.className = "error-login";
-    errorBox.innerHTML = "Erreur dans l’identifiant ou le mot de passe";
+    errorBox.innerHTML = "Erreur sur l'email ou le mot de passe";
     document.querySelector("form").prepend(errorBox);
   } else {
     let result = await response.json();
