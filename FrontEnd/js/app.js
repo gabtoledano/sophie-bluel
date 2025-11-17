@@ -37,7 +37,7 @@ async function getWorks(filter) {
       throw new Error(`Response status: ${response.status}`);
     }
     const json = await response.json();
-
+    
     // Si un filtre est appliqué, on filtre les résultats par categoryId
     if (filter) {
       const filtered = json.filter((data) => data.categoryId === filter);
@@ -52,7 +52,7 @@ async function getWorks(filter) {
         setFigureModal(json[i]);
       }
     }
-
+    
     // Attache les événements de suppression sur toutes les icônes de corbeille
     const trashCans = document.querySelectorAll(".fa-trash-can");
     trashCans.forEach((e) =>
@@ -168,7 +168,7 @@ function displayAdminMode() {
     document.querySelector(".js-modal-2").style.display = "block";
     // Ajuste la marge de la galerie
     document.querySelector(".gallery").style.margin = "30px 0 0 0";
-
+    
     // Crée la bannière "Mode édition" en haut de page
     const editBanner = document.createElement("div");
     editBanner.className = "edit";
@@ -315,16 +315,14 @@ document.querySelectorAll(".js-modal").forEach((a) => {
 // ============================================================
 
 /**
- * Supprime un projet via l'API et met à jour le DOM sans rafraîchir la page
+ * Supprime un projet via l'API et rafraîchit l'affichage
  * @param {Event} event - Événement de clic sur l'icône de suppression
  */
 async function deleteWork(event) {
   event.stopPropagation(); // Empêche la propagation pour éviter d'autres actions
-  event.preventDefault(); // Empêche tout comportement par défaut
-
-  const id = event.currentTarget.id; // Récupère l'ID du projet depuis l'attribut id de l'icône
+  const id = event.srcElement.id; // Récupère l'ID du projet depuis l'attribut id de l'icône
   const token = sessionStorage.authToken; // Récupère le token d'authentification
-
+  
   try {
     // Appel API DELETE pour supprimer le projet
     const response = await fetch(`${url}/works/${id}`, {
@@ -336,26 +334,7 @@ async function deleteWork(event) {
 
     // Si la suppression a réussi
     if (response.status == 200 || response.status == 204) {
-      // ✅ Suppression optimisée : retire uniquement les éléments du DOM sans recharger toute la galerie
-
-      // Supprime l'élément de la galerie principale
-      const galleryFigures = document.querySelectorAll(".gallery figure");
-      galleryFigures.forEach((figure) => {
-        const img = figure.querySelector("img");
-        if (img && img.src.includes(`/${id}`)) {
-          figure.remove();
-        }
-      });
-
-      // Supprime l'élément de la modale
-      const modalFigures = document.querySelectorAll(".modal-gallery figure");
-      modalFigures.forEach((figure) => {
-        const trashIcon = figure.querySelector(".fa-trash-can");
-        if (trashIcon && trashIcon.id == id) {
-          figure.remove();
-        }
-      });
-
+      await getWorks(); // ✅ Rafraîchit l'affichage des projets
       console.log("Photo supprimée avec succès");
     } else if (response.status == 401 || response.status == 500) {
       // Gestion des erreurs d'authentification ou serveur
@@ -409,9 +388,9 @@ function handlePictureSubmit() {
   const img = document.createElement("img"); // Element pour la prévisualisation
   const fileInput = document.getElementById("file");
   let file; // Variable pour stocker le fichier sélectionné
-
+  
   fileInput.style.display = "none"; // Cache l'input natif (design personnalisé)
-
+  
   // ========== GESTION DE LA SÉLECTION D'IMAGE ==========
   fileInput.addEventListener("change", function (event) {
     file = event.target.files[0];
@@ -432,7 +411,7 @@ function handlePictureSubmit() {
         document.getElementById("photo-container").appendChild(img);
       };
       reader.readAsDataURL(file);
-
+      
       // Masque les éléments de placeholder (icône, texte)
       document
         .querySelectorAll(".picture-loaded")
@@ -462,9 +441,9 @@ function handlePictureSubmit() {
 
   addPictureForm.addEventListener("submit", async (event) => {
     event.preventDefault(); // Empêche le rechargement de la page
-
+    
     const hasImage = document.querySelector("#photo-container").firstChild;
-
+    
     // Validation : image + titre obligatoires
     if (hasImage && titleValue) {
       // Création du FormData pour l'envoi multipart/form-data
@@ -488,19 +467,17 @@ function handlePictureSubmit() {
         },
         body: formData,
       });
-
+      
       // Si l'ajout a réussi
       if (response.status === 201) {
         await getWorks(); // ✅ Rafraîchit l'affichage des projets
         console.log("Photo ajoutée avec succès");
-
+        
         // Réinitialisation du formulaire
         addPictureForm.reset();
         document.querySelector("#photo-container").innerHTML = "";
-        document
-          .querySelectorAll(".picture-loaded")
-          .forEach((e) => (e.style.display = "block"));
-
+        document.querySelectorAll(".picture-loaded").forEach((e) => (e.style.display = "block"));
+        
         // Retour à la modale galerie
         toggleModal();
       } else {
