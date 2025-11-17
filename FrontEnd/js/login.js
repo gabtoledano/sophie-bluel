@@ -5,6 +5,11 @@ document.getElementById("loginform").addEventListener("submit", handleSubmit);
 async function handleSubmit(event) {
   event.preventDefault();
 
+  const existingError = document.querySelector(".error-login");
+  if (existingError) {
+    existingError.remove();
+  }
+
   let user = {
     email: document.getElementById("email").value,
     password: document.getElementById("password").value,
@@ -17,6 +22,7 @@ async function handleSubmit(event) {
     },
     body: JSON.stringify(user),
   });
+  
   if (response.status != 200) {
     const errorBox = document.createElement("div");
     errorBox.className = "error-login";

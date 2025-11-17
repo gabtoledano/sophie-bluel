@@ -1,3 +1,7 @@
+/* ============================================================
+   STYLES SPÉCIFIQUES - CONTAINER
+   ============================================================ */
+
 .container {
     display: flex;
     align-items: center;
@@ -11,10 +15,14 @@
 .container p {
     margin-left: 10px;
 }
-/* http://meyerweb.com/eric/tools/css/reset/
+
+/* ============================================================
+   RESET CSS (Meyer Reset v2.0)
+   http://meyerweb.com/eric/tools/css/reset/
    v2.0 | 20110126
    License: none (public domain)
-*/
+   ============================================================ */
+
 * {
 	box-sizing: border-box;
 }
@@ -39,52 +47,76 @@ time, mark, audio, video {
 	font: inherit;
 	vertical-align: baseline;
 }
+
 a {
 	color: black;
 	text-decoration: none;
 }
+
 a:visited {
 	color: black;
 }
+
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
 	display: block;
 }
+
 body {
 	line-height: 1;
 	background-color: #FFFEF8;
 }
+
 ol, ul {
 	list-style: none;
 }
+
 blockquote, q {
 	quotes: none;
 }
+
 blockquote:before, blockquote:after,
 q:before, q:after {
 	content: '';
 	content: none;
 }
+
 table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
+
 /** end reset css**/
+
+/* ============================================================
+   CONFIGURATION GÉNÉRALE DU BODY
+   ============================================================ */
+
 body {
 	max-width: 1140px;
 	margin:auto;
 	font-family: 'Work Sans';
 	font-size: 14px;
 }
+
+/* ============================================================
+   HEADER & NAVIGATION
+   ============================================================ */
+
 header {
 	display: flex;
 	justify-content: space-between;
 	margin: 50px 0
 }
+
 section {
 	margin: 50px 0
 }
+
+/* ============================================================
+   TYPOGRAPHIE - TITRES
+   ============================================================ */
 
 h1{
 	display: flex;
@@ -108,12 +140,18 @@ h2{
 	font-size: 30px;
 	color: #1D6154
 }
+
+/* ============================================================
+   NAVIGATION - MENU
+   ============================================================ */
+
 nav ul {
 	display: flex;
 	align-items: center;
 	list-style-type: none;
 
 }
+
 nav li {
 	padding: 0 10px;
 	font-size: 1.2em;
@@ -122,13 +160,20 @@ nav li {
 li:hover {
 	color: #B1663C;
 }
+
+/* ============================================================
+   SECTION INTRODUCTION
+   ============================================================ */
+
 #introduction {
 	display: flex;
 	align-items: center;
 }
+
 #introduction figure {
 	flex: 1
 }
+
 #introduction img {
 	display: block;
 	margin: auto;
@@ -138,6 +183,7 @@ li:hover {
 #introduction article {
 	flex: 1
 }
+
 #introduction h2 {
 	margin-bottom: 1em;
 }
@@ -145,13 +191,23 @@ li:hover {
 #introduction p {
 	margin-bottom: 0.5em;
 }
+
+/* ============================================================
+   SECTION PORTFOLIO
+   ============================================================ */
+
 #portfolio h2 {
 	text-align: center;
 }
 
+/* Bouton "Modifier" visible en mode admin */
 .js-modal-2 {
 	padding-top: 10px;
 }
+
+/* ============================================================
+   FILTRES DE CATÉGORIES
+   ============================================================ */
 
 .div-container {
     min-width: 550px;
@@ -160,6 +216,7 @@ li:hover {
     justify-content: space-evenly;
     margin: 35px auto;
 }
+
 .div-container > * {
 	padding: 10px 20px;
 	border: 1px solid #1D6154;
@@ -168,15 +225,21 @@ li:hover {
 	color: #1D6154;
 	cursor: pointer;
 }
+
 .div-container > *:hover{
 	background-color: #1D6154;
 	color: white;
 }
 
+/* Filtre actif/sélectionné */
 .active-filter {
 	background-color: #1D6154;
 	color: white;
 }
+
+/* ============================================================
+   GALERIE PRINCIPALE
+   ============================================================ */
 
 .gallery {
 	width: 100%;
@@ -192,6 +255,10 @@ li:hover {
 	overflow: hidden;
 	object-fit: cover;
 }
+
+/* ============================================================
+   MODALE - BOUTONS DE FERMETURE ET NAVIGATION
+   ============================================================ */
 
 .close-button-container{
     display: flex;
@@ -218,17 +285,24 @@ li:hover {
     background-color: white;
     font-size: 24px;
 }
+
 .js-modal-back {
 	border: none;
     background-color: white;
     font-size: 24px;
 }
+
+/* ============================================================
+   MODALE - STRUCTURE ET CONTENU
+   ============================================================ */
+
 .modal-wrapper h3 {
     font-size: 26px;
     text-align: center;
     display: block;
     margin-bottom: 40px;
 }
+
 .modal-gallery {
     width: 100%;
 	display: grid;
@@ -236,17 +310,21 @@ li:hover {
 	grid-column-gap: 20px;
 	grid-row-gap: 20px;
 }
+
 .modal-gallery img {
 	width: 100%;
 }
+
 .modal-wrapper hr {
     margin-top: 30px;
 	width: 100%;
 }
+
 .modal-button-container{
     display: flex;
     justify-content: center;
 }
+
 .add-photo-button {
     padding: 10px 20px;
     margin-top: 10px;
@@ -258,6 +336,11 @@ li:hover {
     background-color: #1D6154;
     width: 250px;
 }
+
+/* ============================================================
+   MODALE - IMAGES AVEC ICÔNE DE SUPPRESSION
+   ============================================================ */
+
 .image-container {
     position: relative;
     display: inline-block;
@@ -278,17 +361,25 @@ li:hover {
     padding: 4px;
     border-radius: 10%;
 }
+
+/* ============================================================
+   FORMULAIRES - STYLES GÉNÉRAUX
+   ============================================================ */
+
 .form {
 	width: 50%;
 	margin: auto;
 }
+
 .form > * {
 	text-align: center;
 	
 }
+
 .form h2{
 	margin-bottom: 20px;
 }
+
 .form form {
 	text-align: left;
 	margin-top:30px;
@@ -302,16 +393,24 @@ li:hover {
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
+
 .form label {
 	margin: 2em 0 1em 0;
 }
+
 .form textarea {
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
+
+/* ============================================================
+   FORMULAIRE - AJOUT DE PHOTO
+   ============================================================ */
+
 .add-photo-form {
 	width: 70%;
 }
+
 input[type="submit"]{
 	font-family: 'Syne';
 	font-weight: 700;
@@ -324,11 +423,19 @@ input[type="submit"]{
 	cursor: pointer;
 }
 
+/* ============================================================
+   FOOTER
+   ============================================================ */
+
 footer nav ul {
 	display: flex;
 	justify-content: flex-end;
 	margin: 2em
 }
+
+/* ============================================================
+   MESSAGES D'ERREUR
+   ============================================================ */
 
 .error-login {
 	background-color: #B84947;
@@ -337,6 +444,10 @@ footer nav ul {
 	justify-content: center;
 	padding: 10px;
 }
+
+/* ============================================================
+   MODE ADMINISTRATEUR - BANNIÈRE D'ÉDITION
+   ============================================================ */
 
 .edit {
 	background-color: black;
@@ -356,9 +467,14 @@ footer nav ul {
 .edit a {
 	color: white;
 }
+
 .edit a:visited {
 	color: white;
 }
+
+/* ============================================================
+   MODALE - OVERLAY ET WRAPPER
+   ============================================================ */
 
 .modal {
 	position: fixed;
@@ -380,6 +496,10 @@ footer nav ul {
 	padding: 20px;
 	background-color: white;
 }
+
+/* ============================================================
+   UPLOAD DE FICHIER - SECTION D'AJOUT D'IMAGE
+   ============================================================ */
 
 .file-section {
 	background-color: #E8F1F6;
@@ -415,6 +535,10 @@ footer nav ul {
 	display: none;
 }
 
+/* ============================================================
+   PRÉVISUALISATION DE L'IMAGE UPLOADÉE
+   ============================================================ */
+
 #photo-container {
 	width: 70%;
 }
@@ -422,4 +546,3 @@ footer nav ul {
 #photo-container img {
 	width: 100%;
 }
-
