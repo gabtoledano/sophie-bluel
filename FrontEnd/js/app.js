@@ -5,6 +5,9 @@
 // URL de base de l'API backend
 const url = "http://localhost:5678/api";
 
+// Variable globale pour stocker le filtre actif
+let currentFilter = null;
+
 // Initialisation de l'application au chargement de la page
 getWorks(); // Récupère et affiche tous les projets
 getCategories(); // Charge les catégories pour les filtres
@@ -69,6 +72,7 @@ async function getWorks(filter) {
  */
 function setFigure(data) {
   const figure = document.createElement("figure");
+  figure.setAttribute("data-id", data.id); // Ajout d'un identifiant unique
   figure.innerHTML = `<img src=${data.imageUrl} alt=${data.title}>
                     <figcaption>${data.title}</figcaption>`;
 
@@ -81,6 +85,7 @@ function setFigure(data) {
  */
 function setFigureModal(data) {
   const figure = document.createElement("figure");
+  figure.setAttribute("data-id", data.id); // Ajout d'un identifiant unique
   figure.innerHTML = `<div class="image-container">
         <img src="${data.imageUrl}" alt="${data.title}">
         <figcaption>${data.title}</figcaption>
@@ -123,13 +128,12 @@ function setFilter(data) {
   const div = document.createElement("div");
   div.className = data.id;
   // Au clic, filtre les projets par cette catégorie
-  div.addEventListener("click", () => getWorks(data.id));
+  div.addEventListener("click", () => {
+    currentFilter = data.id; // Stocke le filtre actif
+    getWorks(data.id);
+  });
   // Gère l'état actif du filtre
   div.addEventListener("click", (event) => toggleFilter(event));
-  // Configure aussi le bouton "Tous"
-  document
-    .querySelector(".tous")
-    .addEventListener("click", (event) => toggleFilter(event));
   div.innerHTML = `${data.name}`;
   document.querySelector(".div-container").append(div);
 }
@@ -149,7 +153,13 @@ function toggleFilter(event) {
 }
 
 // Configure le bouton "Tous" pour afficher tous les projets
-document.querySelector(".tous").addEventListener("click", () => getWorks());
+document.querySelector(".tous").addEventListener("click", () => {
+  currentFilter = null; // Réinitialise le filtre
+  getWorks();
+});
+
+// Configure aussi le toggle filter pour le bouton "Tous"
+document.querySelector(".tous").addEventListener("click", (event) => toggleFilter(event));
 
 // ============================================================
 // MODE ADMINISTRATEUR
@@ -336,25 +346,8 @@ async function deleteWork(event) {
 
     // Si la suppression a réussi
     if (response.status == 200 || response.status == 204) {
-      // ✅ Suppression optimisée : retire uniquement les éléments du DOM sans recharger toute la galerie
-
-      // Supprime l'élément de la galerie principale
-      const galleryFigures = document.querySelectorAll(".gallery figure");
-      galleryFigures.forEach((figure) => {
-        const img = figure.querySelector("img");
-        if (img && img.src.includes(`/${id}`)) {
-          figure.remove();
-        }
-      });
-
-      // Supprime l'élément de la modale
-      const modalFigures = document.querySelectorAll(".modal-gallery figure");
-      modalFigures.forEach((figure) => {
-        const trashIcon = figure.querySelector(".fa-trash-can");
-        if (trashIcon && trashIcon.id == id) {
-          figure.remove();
-        }
-      });
+      // ✅ Suppression optimisée : retire tous les éléments avec le même data-id
+      document.querySelectorAll(`figure[data-id="${id}"]`).forEach(fig => fig.remove());
 
       console.log("Photo supprimée avec succès");
     } else if (response.status == 401 || response.status == 500) {
@@ -491,7 +484,7 @@ function handlePictureSubmit() {
 
       // Si l'ajout a réussi
       if (response.status === 201) {
-        await getWorks(); // ✅ Rafraîchit l'affichage des projets
+        await getWorks(currentFilter); // Rafraîchit l'affichage avec le filtre actif
         console.log("Photo ajoutée avec succès");
 
         // Réinitialisation du formulaire
